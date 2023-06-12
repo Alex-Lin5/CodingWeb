@@ -1,1 +1,37 @@
-<p>codes-post works!</p>
+<mat-card>
+  <!-- <form (submit)="onAddCode(postForm) #postForm="NgForm" > -->
+  <form [formGroup]="codeForm" (ngSubmit)="SubmitCode()" >
+    
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        id="language"
+        formControlName="language"
+        minlength="3"
+        maxlength="15"
+        placeholder="Code language"
+        >
+      <!-- <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        formControlName="content"
+        placeholder="Code Content"
+        ></textarea>
+      <!-- <mat-error *ngIf="content.invalid">Please enter a post title.</mat-error> -->
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit">Save Code
+    </button>
+  </form>
+  <div></div>
+  <div></div>
+</mat-card>
+<p style="color: black;">CodeForm: {{ codeForm.value }}</p>
+<hr>
