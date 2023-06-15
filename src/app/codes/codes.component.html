@@ -1,0 +1,78 @@
+<mat-card>
+  <form [formGroup]="codeForm" (ngSubmit)="add()" >
+    
+    <mat-form-field>
+      <input
+        matInput
+        type="text"
+        id="language"
+        formControlName="language"
+        minlength="3"
+        maxlength="15"
+        placeholder="Code language"
+        >
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        rows="4"
+        formControlName="content"
+        placeholder="Code Content"
+        ></textarea>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      type="submit">Save Code
+    </button>
+    <!-- <mat-divider></mat-divider> -->
+    <mat-card-content style="color: aliceblue; margin-top: 3%;">
+      Performance {{ codeForm.value.performance}}</mat-card-content>
+    <mat-card-content style="color: aliceblue; line-height: 250%;">
+      result {{ codeForm.value.result}}</mat-card-content>
+  </form>
+  <!-- <div></div>
+  <div></div> -->
+</mat-card>
+<!-- <p style="color: black;">CodeForm: {{ codeForm.value }}</p> -->
+<hr>
+<p mat-card-subtitle>All Codes</p>
+<!-- <ul class="codes"> -->
+  <div *ngFor="let code of codes" >
+    <mat-card>
+    <mat-form-field>  
+    <input matInput type="text" class="language" 
+      placeholder="Code language"
+      [value]="code.language">
+    <mat-divider></mat-divider>
+    <textarea 
+      matInput
+      placeholder="Code Content"
+      [value]="code.content"
+    ></textarea>
+    <!-- <input matInput type="textarea" class="content" 
+      [value]="code.content" > -->
+    <!-- <div>{{code._id}}</div> -->
+    <button
+      mat-raised-button
+      color="accent"
+      type="Edit"
+      (click)="edit(editCode)">Edit
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      type="Delete"
+      (click)="delete(code)"
+      >Delete</button>
+    <mat-card-content style="color: aliceblue; margin-top: 3%;">
+      Performance {{ code.performance}}</mat-card-content>
+    <mat-card-content style="color: aliceblue; line-height: 250%;">
+      result {{ code.result}}</mat-card-content>
+  
+      </mat-form-field>
+    </mat-card>
+  </div>
+  
+<!-- </ul> -->

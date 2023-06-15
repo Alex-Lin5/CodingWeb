@@ -10,15 +10,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
 
-import { CodesGetComponent } from './codes/codes-get/codes-get.component';
-import { CodesPostComponent } from './codes/codes-post/codes-post.component';
+import { CodesComponent } from './codes/codes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CodesGetComponent,
-    CodesPostComponent
+    CodesComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +29,7 @@ import { CodesPostComponent } from './codes/codes-post/codes-post.component';
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
