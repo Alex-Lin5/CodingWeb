@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CodesService } from "./codes.service";
 import { Code } from "./codes.model"
@@ -12,27 +12,30 @@ import { Code } from "./codes.model"
 })
 export class CodesComponent implements OnInit{
   codes: Code[] = [];
-  editCode: Code;
-  codeForm = this.fb.group({
-    _id: [''],
-    language: [''],
-    content: [''],
-    result: [''],
-    performance: ['']
-  })
+  editCode: Code | undefined = undefined;
+  codeForm = this.createForm();
+  editingForm = this.createForm();
 
   constructor(
     public codesService: CodesService, 
     private fb: FormBuilder) {
-      this.editCode = this.codes[0];
     }
-  
+  private createForm(): FormGroup{
+    let form = this.fb.group({
+      _id: [''],
+      language: [''],
+      content: [''],
+      result: [''],
+      performance: ['']  
+    })
+    return form;
+  }
   ngOnInit(): void {
     this.getAll();
   }
   // POST request
   add(): void {
-    console.info(this.codeForm.value);
+    // console.info(this.codeForm.value);
     const content = this.codeForm.controls['content'].value;
     const language = this.codeForm.value.language?.trim();
     const newCode: Code = { language, content } as Code;
@@ -55,12 +58,43 @@ export class CodesComponent implements OnInit{
       .subscribe();
   }
   // PUT request
-  edit(code: Code): void {
-    // console.log("Edit code in component.");
-    if(this.codes.filter(c => c == code) == null){
-      this.codesService
-        .updateCode(code)
-        .subscribe();
-    }
+  edit(): void {
+    // if(code == undefined){
+    //   console.log("undefined code input.");
+    //   return;
+    // } 
+    
+    const _id = this.editingForm.value._id;
+    const content = this.editingForm.value.content;
+    const language = this.editingForm.value.language?.trim();
+    const newCode: Code = { _id, language, content } as Code;
+    console.log("Edit code in component. ", newCode);      
+    this.codesService
+      .updateCode(newCode)
+      .subscribe(code => {
+        const ix = code ? this.codes.findIndex(c => c._id === code._id) : -1
+        if (ix > -1){
+          this.codes[ix] = code;
+        }
+      });
+
+    // if(this.codes.filter(c => c == newCode) === null){
+    //   this.codesService
+    //     .updateCode(newCode)
+    //     .subscribe();
+    // } else{
+    //   console.log("No editing.");
+    // }
+    this.editCode = undefined;
+  }
+  patch(code: Code): void{
+    console.log("Form value patched, ", code);
+    this.editingForm.patchValue({
+      _id: code._id,
+      language: code.language,
+      content: code.content,
+      result: code.result,
+      performance: code.performance
+    })
   }
 }

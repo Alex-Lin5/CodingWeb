@@ -49,7 +49,7 @@ export class CodesService {
   }
 
   updateCode(code: Code): Observable<Code> {
-    const url = `${this.codeUrl}/${code._id}`;
+    const url = `${this.codeUrl}/codes/${code._id}`;
     console.log("Update code in", url);
     return this.http.put<Code>(url, code, this.httpOptions)
   }

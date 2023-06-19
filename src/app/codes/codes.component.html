@@ -1,7 +1,9 @@
+<br>
 <mat-card>
   <form [formGroup]="codeForm" (ngSubmit)="add()" >
     
     <mat-form-field>
+      <mat-label>langugae</mat-label>
       <input
         matInput
         type="text"
@@ -14,6 +16,7 @@
     </mat-form-field>
 
     <mat-form-field>
+      <mat-label>content</mat-label>
       <textarea
         matInput
         rows="4"
@@ -24,55 +27,96 @@
     <button
       mat-raised-button
       color="accent"
-      type="submit">Save Code
+      width="auto"
+      type="submit">Add
     </button>
-    <!-- <mat-divider></mat-divider> -->
-    <mat-card-content style="color: aliceblue; margin-top: 3%;">
-      Performance {{ codeForm.value.performance}}</mat-card-content>
-    <mat-card-content style="color: aliceblue; line-height: 250%;">
-      result {{ codeForm.value.result}}</mat-card-content>
-  </form>
-  <!-- <div></div>
-  <div></div> -->
+      <body mat-card-content >
+        Performance {{ codeForm.value.performance}}</body>
+      <body mat-card-content 
+      style="margin-bottom: 3%;">
+        result {{ codeForm.value.result}}</body>
+    </form>
 </mat-card>
-<!-- <p style="color: black;">CodeForm: {{ codeForm.value }}</p> -->
-<hr>
-<p mat-card-subtitle>All Codes</p>
+<br>
+<!-- <mat-card> -->
+  <h2 style="color: black;">All Codes</h2>
+  <!-- <mat-card-header>
+    <mat-card-title>All Codes</mat-card-title>
+  </mat-card-header> -->
+<!-- <h1>All codes</h1> -->
 <!-- <ul class="codes"> -->
-  <div *ngFor="let code of codes" >
-    <mat-card>
-    <mat-form-field>  
-    <input matInput type="text" class="language" 
-      placeholder="Code language"
-      [value]="code.language">
-    <mat-divider></mat-divider>
-    <textarea 
-      matInput
-      placeholder="Code Content"
-      [value]="code.content"
-    ></textarea>
-    <!-- <input matInput type="textarea" class="content" 
-      [value]="code.content" > -->
-    <!-- <div>{{code._id}}</div> -->
-    <button
+<div *ngFor="let code of codes" >
+  <mat-card>
+  <div *ngIf="code==editCode; then saves else edits"></div>
+  <ng-template #saves>
+    <form [formGroup]="editingForm" (ngSubmit)="edit()" >
+      <mat-form-field>  
+        <input matInput type="text" class="language" 
+          placeholder="Code language"
+          formControlName="language"
+          >
+      </mat-form-field>
+        <!-- <mat-divider></mat-divider>  -->
+        <mat-form-field>
+          <mat-label>content</mat-label>
+        <textarea 
+          matInput
+          id="content"
+          placeholder="Code Content"
+          formControlName="content"
+          value="{{editingForm.value.content}}"
+          ></textarea>
+        </mat-form-field>
+      <span>
+      <button
       mat-raised-button
-      color="accent"
-      type="Edit"
-      (click)="edit(editCode)">Edit
-    </button>
+      color="primary"
+      type="submit"
+      (click)="edit()">
+      Save</button>
+      <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="editCode=undefined; ">
+      Cancel</button>
+    </span>
+      </form>
+  </ng-template>
+<ng-template #edits>
+    <p mat-card-content type="text" class="language" 
+    placeholder="Code language">
+    {{code.language}}</p>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+    <mat-label>content</mat-label>
+    <textarea 
+    matInput
+    label="content"
+    placeholder="Code Content"
+    disabled value="{{code.content}}"
+  ></textarea>
+</mat-form-field>
+<button
+    mat-raised-button
+    color="accent"
+    type="Edit"
+    (click)="editCode=code; patch(editCode);">Edit
+  </button>
+</ng-template>
     <button
       mat-raised-button
       color="warn"
       type="Delete"
       (click)="delete(code)"
       >Delete</button>
-    <mat-card-content style="color: aliceblue; margin-top: 3%;">
-      Performance {{ code.performance}}</mat-card-content>
-    <mat-card-content style="color: aliceblue; line-height: 250%;">
-      result {{ code.result}}</mat-card-content>
-  
-      </mat-form-field>
+    <body class="mat-body">
+      Performance {{ code.performance}}</body>
+    <body mat-card-content 
+    style="margin-bottom: 3%;">
+      result {{ code.result}}</body>
+    <br>
     </mat-card>
   </div>
-  
-<!-- </ul> -->
+<!-- </mat-card> -->
+
