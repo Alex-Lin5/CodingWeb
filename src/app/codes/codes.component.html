@@ -4,15 +4,15 @@
     
     <mat-form-field>
       <mat-label>langugae</mat-label>
-      <input
-        matInput
-        type="text"
-        id="language"
-        formControlName="language"
-        minlength="3"
-        maxlength="15"
-        placeholder="Code language"
+        <mat-select
+          formControlName="language"
+          placeholder="Plain Text"
         >
+          <mat-option *ngFor="let lan of languages"
+          value="{{lan}}">
+            {{lan}}
+          </mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field>
@@ -21,7 +21,7 @@
         matInput
         rows="4"
         formControlName="content"
-        placeholder="Code Content"
+        placeholder="Coding here"
         ></textarea>
     </mat-form-field>
     <button
@@ -30,14 +30,45 @@
       width="auto"
       type="submit">Add
     </button>
-      <body mat-card-content >
-        Performance {{ codeForm.value.performance}}</body>
-      <body mat-card-content 
-      style="margin-bottom: 3%;">
-        result {{ codeForm.value.result}}</body>
-    </form>
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="search()">Search
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="clear(codeForm)">Clear
+    </button>
+    <br>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <mat-label>performance</mat-label>
+      <textarea 
+      matInput
+      label="performance"
+      placeholder="Code performance"
+      disabled value="{{codeForm.value.performance}}">
+      </textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>result</mat-label>
+    <textarea 
+    matInput
+    label="result"
+    placeholder="Code result"
+    disabled value="{{codeForm.value.result}}">
+    </textarea>
+</mat-form-field>
+  </form>
 </mat-card>
 <br>
+
+
+
 <!-- <mat-card> -->
   <h2 style="color: black;">All Codes</h2>
   <!-- <mat-card-header>
@@ -45,17 +76,25 @@
   </mat-card-header> -->
 <!-- <h1>All codes</h1> -->
 <!-- <ul class="codes"> -->
-<div *ngFor="let code of codes" >
+<div *ngFor="let code of displayedCodes" >
   <mat-card>
   <div *ngIf="code==editCode; then saves else edits"></div>
   <ng-template #saves>
     <form [formGroup]="editingForm" (ngSubmit)="edit()" >
-      <mat-form-field>  
-        <input matInput type="text" class="language" 
-          placeholder="Code language"
+      <mat-form-field>
+      <mat-label>langugae</mat-label>
+        <mat-select
+          disableRipple   
           formControlName="language"
-          >
-      </mat-form-field>
+          placeholder="Plain Text"
+          value="{{editingForm.value.language}}"
+        >
+          <mat-option *ngFor="let lan of languages"
+          value="{{lan}}">
+            {{lan}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
         <!-- <mat-divider></mat-divider>  -->
         <mat-form-field>
           <mat-label>content</mat-label>
@@ -84,9 +123,20 @@
       </form>
   </ng-template>
 <ng-template #edits>
-    <p mat-card-content type="text" class="language" 
+    <!-- <p mat-card-content type="text" class="language" 
     placeholder="Code language">
-    {{code.language}}</p>
+    {{code.language}}</p> -->
+    <mat-form-field>
+      <mat-label>langugae</mat-label>
+        <mat-select 
+          disabled value="{{code.language}}"
+        >
+          <mat-option value="{{code.language}}">
+            {{code.language}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <mat-divider></mat-divider>
     <mat-form-field>
     <mat-label>content</mat-label>
@@ -110,12 +160,27 @@
       type="Delete"
       (click)="delete(code)"
       >Delete</button>
-    <body class="mat-body">
-      Performance {{ code.performance}}</body>
-    <body mat-card-content 
-    style="margin-bottom: 3%;">
-      result {{ code.result}}</body>
-    <br>
+
+      <mat-form-field>
+        <mat-label>performance</mat-label>
+        <textarea 
+        matInput
+        label="performance"
+        placeholder="Code performance"
+        disabled value="{{code.performance}}">
+        </textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>result</mat-label>
+      <textarea 
+      matInput
+      label="result"
+      placeholder="Code result"
+      disabled value="{{code.result}}">
+      </textarea>
+  </mat-form-field>
+      <br>
     </mat-card>
   </div>
 <!-- </mat-card> -->

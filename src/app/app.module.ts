@@ -11,6 +11,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatSelectModule} from '@angular/material/select'
 
 import { CodesComponent } from './codes/codes.component';
 
@@ -30,6 +31,7 @@ import { CodesComponent } from './codes/codes.component';
     MatInputModule,
     MatFormFieldModule,
     MatDividerModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,10 +12,11 @@ import { Code } from "./codes.model"
 })
 export class CodesComponent implements OnInit{
   codes: Code[] = [];
+  displayedCodes: Code[] = []
   editCode: Code | undefined = undefined;
   codeForm = this.createForm();
   editingForm = this.createForm();
-
+  languages: string[] = ['Plain Text','Python', 'Java', 'Javascript', 'C++']
   constructor(
     public codesService: CodesService, 
     private fb: FormBuilder) {
@@ -32,6 +33,7 @@ export class CodesComponent implements OnInit{
   }
   ngOnInit(): void {
     this.getAll();
+    // this.displayedCodes = this.codes;
   }
   // POST request
   add(): void {
@@ -41,13 +43,41 @@ export class CodesComponent implements OnInit{
     const newCode: Code = { language, content } as Code;
     this.codesService
       .addCode(newCode)
-      .subscribe(code => this.codes.push(code))
+      .subscribe(code => this.codes.push(code));
+    this.clear(this.codeForm);
+  }
+
+  search(): void{
+    const content = this.codeForm.value.content;
+    const language = this.codeForm.value.language?.trim();
+    const sCode: Code = { language, content } as Code;
+    console.log("User pulls a searching request.", sCode);
+    if(!content && !language){
+      console.log("Empty search condition.");
+      this.displayedCodes = this.codes;
+      return;
+    }
+    this.displayedCodes = this.codes.filter(c => 
+      (c.language == sCode.language) 
+      // ||
+      // (c.content.slice(0, content.length) == sCode.content)
+      // c.content.includes(content)
+    )
+    if(!this.displayedCodes){
+      console.log("No search result.");
+    }
+    else if(this.displayedCodes == this.codes){
+      console.log("Show all results.");
+    }
   }
 
   // GET ALL request
   getAll(): void {
     this.codesService.getCodes()
-      .subscribe(codes => (this.codes = codes));
+      .subscribe(codes => {
+        this.codes = codes;
+        this.displayedCodes = this.codes;
+      });
   }
   
   // DELETE request
@@ -59,32 +89,24 @@ export class CodesComponent implements OnInit{
   }
   // PUT request
   edit(): void {
-    // if(code == undefined){
-    //   console.log("undefined code input.");
-    //   return;
-    // } 
-    
+    if(this.editCode == undefined) return;
     const _id = this.editingForm.value._id;
     const content = this.editingForm.value.content;
     const language = this.editingForm.value.language?.trim();
     const newCode: Code = { _id, language, content } as Code;
-    console.log("Edit code in component. ", newCode);      
-    this.codesService
-      .updateCode(newCode)
-      .subscribe(code => {
-        const ix = code ? this.codes.findIndex(c => c._id === code._id) : -1
-        if (ix > -1){
-          this.codes[ix] = code;
-        }
-      });
-
-    // if(this.codes.filter(c => c == newCode) === null){
-    //   this.codesService
-    //     .updateCode(newCode)
-    //     .subscribe();
-    // } else{
-    //   console.log("No editing.");
-    // }
+    if(newCode.content === this.editCode.content && newCode.language === this.editCode.language){
+      console.log("No editing with same content.");
+    } else{
+      console.log("Edit code in component. ", newCode);      
+      this.codesService
+        .updateCode(newCode)
+        .subscribe(code => {
+          const ix = code ? this.codes.findIndex(c => c._id === code._id) : -1
+          if (ix > -1){
+            this.codes[ix] = code;
+          }
+        });
+    }
     this.editCode = undefined;
   }
   patch(code: Code): void{
@@ -96,5 +118,15 @@ export class CodesComponent implements OnInit{
       result: code.result,
       performance: code.performance
     })
+  }
+  clear(form: FormGroup): void{
+    console.log("Clear form ", form.value);
+    form.setValue({
+      _id: '',
+      language: '',
+      content: '',
+      result: '',
+      performance: ''
+    });
   }
 }
