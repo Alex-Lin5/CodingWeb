@@ -8,6 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Backend service is developed under another [repository](https://github.com/Alex-Lin5/Algorithm-Coding-Pool)  in my github account.
 
+`netstat -ano` command, check ports usage in windows. `netstat -tunlp` for linux.
 ## Angular Commands
 
 Run `ng add @angular/material` to install material module compatibale to the angular project, `ng update @angular/material @angular/cli` will update the material and the angular CLI to latest version
