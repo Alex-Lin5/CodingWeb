@@ -9,8 +9,7 @@ import { Code } from "./codes.model";
 export class CodesService {
   private codes: Code[] = [];
   // private handleError: HandleError;
-  // private codesUpdated = new Subject<Code[]>();
-  private codeUrl = "http://localhost:3000";
+  private codeUrl = "http://localhost:7070";
   constructor(
     private http: HttpClient,
     // httpErrorHandler: HttpErrorHandler
@@ -23,15 +22,6 @@ export class CodesService {
       // 'Origin': "http://localhost:4200",
     })
   }
-  // getCodes() {
-  //   this.http
-  //     .get<{ message: string; codes: Code[] }>(this.codeUrl)
-  //     .subscribe(codeData => {
-  //       this.codes = codeData.codes;
-  //       this.codesUpdated.next([...this.codes]);
-  //     });
-  // }
-
   getCodes(): Observable<Code[]> {
     const url = `${this.codeUrl}/codes`;
     console.log("Get all codes.");
@@ -53,9 +43,6 @@ export class CodesService {
     console.log("Update code in", url);
     return this.http.put<Code>(url, code, this.httpOptions)
   }
-  // getCodeUpdateListener() {
-  //   return this.codesUpdated.asObservable();
-  // }
 
   addCode(code: Code): Observable<Code> {
     console.log("add Code: ", code);
