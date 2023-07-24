@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 
+import { PaginatorComponent } from './paginator/paginator.component';
 import { CodesService } from "./codes.service";
 import { Code } from "./codes.model"
 
 @Component({
   selector: 'app-codes',
   templateUrl: './codes.component.html',
-  providers: [CodesService], 
+  providers: [CodesService, PaginatorComponent], 
   styleUrls: ['./codes.component.css']
 })
 export class CodesComponent implements OnInit{
   codes: Code[] = [];
   displayedCodes: Code[] = []
+  codesNo: number = 10
+  codespp: number = 1
+  psoptions: number[] = [1,2,3,5]
+  currentPage: number = 0; // start from 0
+
   editCode: Code | undefined = undefined;
   codeForm = this.createForm();
   editingForm = this.createForm();
@@ -32,8 +39,26 @@ export class CodesComponent implements OnInit{
     return form;
   }
   ngOnInit(): void {
-    this.getAll();
-    // this.displayedCodes = this.codes;
+    // this.getAll();
+    this.codesService.getCodes(this.codespp, this.currentPage)
+      .subscribe(codes => {
+        this.codes = codes;
+        this.displayedCodes = this.codes;
+      });
+    this.codesService.getCodesNo()
+      .subscribe(num => {
+        this.codesNo = num;
+      })
+  }
+  onChangedPage(pageData: PageEvent){
+    this.currentPage = pageData.pageIndex;
+    this.codespp = pageData.pageSize;
+    this.codesService.getCodes(this.codespp, this.currentPage)
+      .subscribe(codes => {
+        this.codes = codes;
+        this.displayedCodes = this.codes;
+      });
+    // console.log(`Now changing page on ${this.currentPage} of pageSize ${this.codespp} by total ${this.codesNo}`);
   }
   // POST request
   add(): void {
@@ -45,6 +70,10 @@ export class CodesComponent implements OnInit{
       .addCode(newCode)
       .subscribe(code => this.codes.push(code));
     this.clear(this.codeForm);
+    this.codesService.getCodesNo()
+      .subscribe(num => {
+        this.codesNo = num;
+      })
   }
 
   search(): void{
@@ -73,7 +102,7 @@ export class CodesComponent implements OnInit{
 
   // GET ALL request
   getAll(): void {
-    this.codesService.getCodes()
+    this.codesService.getCodes(this.codespp, -1)
       .subscribe(codes => {
         this.codes = codes;
         this.displayedCodes = this.codes;
@@ -86,6 +115,11 @@ export class CodesComponent implements OnInit{
     this.codesService
       .deleteCode(code._id)
       .subscribe();
+    this.codesService
+      .getCodesNo()
+      .subscribe(num => {
+        this.codesNo = num;
+    })    
   }
   // PUT request
   edit(): void {

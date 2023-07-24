@@ -6,9 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Backend service is developed under another [repository](https://github.com/Alex-Lin5/Algorithm-Coding-Pool)  in my github account.
+Backend service is developed under another [repository](https://github.com/Alex-Lin5/Algorithm-Coding-Pool).
 
 `netstat -ano` command, check ports usage in windows. `netstat -tunlp` for linux.
+
+## Notes
+- Search function in codes page is not complete, it is only available to find the result from cache rather than backend database
 ## Angular Commands
 
 Run `ng add @angular/material` to install material module compatibale to the angular project, `ng update @angular/material @angular/cli` will update the material and the angular CLI to latest version

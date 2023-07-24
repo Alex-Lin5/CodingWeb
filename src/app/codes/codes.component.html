@@ -76,6 +76,17 @@
   </mat-card-header> -->
 <!-- <h1>All codes</h1> -->
 <!-- <ul class="codes"> -->
+<mat-paginator
+  [length]="codesNo"
+  [pageSize]="codespp"
+  [pageIndex]="currentPage"
+  [pageSizeOptions]="psoptions"
+  [showFirstLastButtons]="true"
+  (page)="onChangedPage($event)"
+  >
+  <!-- *ngIf="displayedCodes.length>0"     -->
+</mat-paginator>
+
 <div *ngFor="let code of displayedCodes" >
   <mat-card>
   <div *ngIf="code==editCode; then saves else edits"></div>
@@ -183,5 +194,15 @@
       <br>
     </mat-card>
   </div>
+  <mat-paginator
+    [length]="codesNo"
+    [pageSize]="codespp"
+    [pageIndex]="currentPage"
+    [pageSizeOptions]="psoptions"
+    [showFirstLastButtons]="true"
+    (page)="onChangedPage($event)"
+    >
+    <!-- *ngIf="displayedCodes.length>0"     -->
+  </mat-paginator>
 <!-- </mat-card> -->
 

@@ -12,17 +12,20 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select'
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { CodesComponent } from './codes/codes.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PaginatorComponent } from './codes/paginator/paginator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CodesComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatFormFieldModule,
     MatDividerModule,
     MatSelectModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

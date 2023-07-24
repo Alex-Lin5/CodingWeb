@@ -1,0 +1,9 @@
+<mat-paginator
+[length]="codesNo"
+[pageSize]="codespp"
+[pageSizeOptions]="psoptions"
+[showFirstLastButtons]="true"
+(page)="onChangedPage($event)"
+>
+<!-- *ngIf="displayedCodes.length>0"     -->
+</mat-paginator>
