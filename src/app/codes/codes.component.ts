@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -49,6 +49,9 @@ export class CodesComponent implements OnInit{
       .subscribe(num => {
         this.codesNo = num;
       })
+  }
+  ngOnDestroy(): void{
+
   }
   onChangedPage(pageData: PageEvent){
     this.currentPage = pageData.pageIndex;
@@ -162,5 +165,16 @@ export class CodesComponent implements OnInit{
       result: '',
       performance: ''
     });
+  }
+  collect(codes: Code[]): void{
+    console.log("Collecting codes to the cache, ", codes);
+    codes.forEach(code => {
+      const codematched = this.codes.filter(c => 
+        (c.language == code.language) ||
+        (c.content.slice(0, code.content.length) == code.content)
+      )
+      if(!codematched)
+        this.codes.push(code);
+    })
   }
 }

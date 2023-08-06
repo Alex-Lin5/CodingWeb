@@ -18,6 +18,8 @@ import { CodesComponent } from './codes/codes.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PaginatorComponent } from './codes/paginator/paginator.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PaginatorComponent } from './codes/paginator/paginator.component';
     CodesComponent,
     HomeComponent,
     PageNotFoundComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

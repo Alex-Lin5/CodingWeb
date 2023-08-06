@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Subject, Observable } from "rxjs";
-import { catchError, switchMap } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators'
 
 import { Code } from "./codes.model";
 
@@ -42,14 +42,7 @@ export class CodesService {
     }
     const url = `${this.hostUrl}/codes/?${queryParams}`;
     console.log(`Get codes of (pageSize, currentPage)=(${pageSize}, ${currentPage}).`);
-    // const codes = this.http.get<Code[]>(url);
-    // console.log("The codes list is ", codes);
-    // return codes;
     const req = this.http.get<Code[]>(url);
-    // .pipe(switchMap(res => {
-    //     console.log("The codes list is ", res);
-    //   })
-    // )
     req.subscribe({
       next(codes){ console.log("The codes list is ", codes);}
     })
