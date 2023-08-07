@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthData } from '../authdata.model';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,10 @@ export class LoginComponent {
   })
   onLogin(){
     // if (form.invalid) return undefined;
-    const data: AuthData = {
+    const data: User = {
       email: this.loginForm.value.email, 
       password: this.loginForm.value.password
-    } as AuthData
+    } as User
     this.authService.login(data);
   }
 }

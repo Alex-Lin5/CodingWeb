@@ -2,17 +2,27 @@
 <mat-card>
   <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
     <mat-form-field>
-      <mat-label>Email</mat-label>
+      <mat-label>UserName</mat-label>
       <input matInput
-      placeholder="youremail@corp.com"
-      value="email">
+      formControlName="username"
+      placeholder="your username"
+      >
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Passwork</mat-label>
+      <mat-label>Email</mat-label>
       <input matInput
+      formControlName="email"
+      placeholder="youremail@corp.com"
+      >
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput
+      formControlName="password"
       placeholder="Your password"
-      value="password">
+      >
     </mat-form-field>
     <br>
     <button mat-raised-button
